@@ -14,44 +14,41 @@ export function CardItems({ editValues, handleInputChange, handleEdit, handleSav
   
   return (
     <form className="bg-zinc-800 p-5 shadow-shape rounded-lg mb-14">
-      <h2 className="text-white font-semibold text-2xl mb-4">Detalhes do CNPJ:</h2>
-      {fields.map((field) => (
-        <div key={field.key} className="mb-4">
-          <label className=" text-zinc-200 block mb-2"><strong>{field.label}:</strong></label>
-          {isEditing ? (
-            <input 
-              className="bg-zinc-700 text-white p-2 rounded-md w-full"
-              type="text"
-              name={field.key}
-              value={editValues[field.key] || ''}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <p className='text-white'>{editValues[field.key]}</p>
+        <h2 className="text-white font-semibold text-2xl mb-4">Detalhes do CNPJ:</h2>
+          {fields.map((field) => (
+            <div key={field.key} className="mb-4">
+              <label className=" text-zinc-200 block mb-2"><strong>{field.label}:</strong></label>
+                {isEditing ? (
+                  <input 
+                    className="bg-zinc-700 text-white p-2 rounded-md w-full"
+                    type="text"
+                    name={field.key}
+                    value={editValues[field.key] || ''}
+                    onChange={handleInputChange}
+                 />
+               ) : (
+                 <p className='text-white'>{editValues[field.key]}</p>
+              )}
+            </div>
+          ))}
+            {isEditing ? (
+              <button 
+              type="button" 
+              onClick={handleSave} 
+              className="mt-4 font-semibold 
+              p-3 rounded-md text-white shadow-shape bg-lime-600 hover:bg-opacity-85">
+                Salvar
+              </button>
+            ) : (
+              <button 
+              className="mt-4 font-semibold p-3 rounded-md text-white shadow-shape
+              bg-lime-600 transition hover:bg-opacity-85"
+              type="button" 
+              onClick={handleEdit} 
+            >
+              Editar dados
+            </button>
           )}
-        </div>
-      ))}
-      {isEditing ? (
-        <button 
-         type="button" 
-         onClick={handleSave} 
-         className="mt-4 font-semibold 
-         p-3 rounded-md text-white shadow-shape bg-lime-600 hover:bg-opacity-85">
-          Salvar
-        </button>
-      ) : (
-        <button 
-        className="mt-4 font-semibold p-3 rounded-md text-white shadow-shape
-         bg-lime-600 hover:bg-opacity-85"
-        type="button" 
-        onClick={handleEdit} 
-       >
-         Editar dados
-       </button>
-     )}
    </form>
   );
 }
-
-
-//bg-zinc-800 p-5 shadow-shape rounded-lg mb-14

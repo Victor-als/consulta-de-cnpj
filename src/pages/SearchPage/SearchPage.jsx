@@ -15,7 +15,6 @@ export function SearchPage() {
   const [showCard, setShowCard] = useState(false);
 
   useEffect(() => {
-    // Carregar dados do localStorage quando o componente for montado
     const savedData = localStorage.getItem('editValues');
     const savedResult = localStorage.getItem('result');
     if (savedData) {
@@ -23,19 +22,17 @@ export function SearchPage() {
     }
     if (savedResult) {
       setResult(JSON.parse(savedResult));
-      setShowCard(true); // Mostrar o card se houver resultado salvo
+      setShowCard(true); 
     }
   }, []);
 
   useEffect(() => {
-    // Salvar dados no localStorage sempre que editValues mudar
     if (Object.keys(editValues).length > 0) {
       localStorage.setItem('editValues', JSON.stringify(editValues));
     }
   }, [editValues]);
 
   useEffect(() => {
-    // Salvar resultado no localStorage sempre que o resultado mudar
     if (result) {
       localStorage.setItem('result', JSON.stringify(result));
     }
@@ -43,10 +40,10 @@ export function SearchPage() {
 
   const formatDate = (dateString) => {
     try {
-      const parsedDate = parseISO(dateString); // Converte a string ISO para um objeto Date
-      return format(parsedDate, 'dd/MM/yyyy', { locale: ptBR }); // Formata a data
+      const parsedDate = parseISO(dateString);
+      return format(parsedDate, 'dd/MM/yyyy', { locale: ptBR });
     } catch (error) {
-      return ''; // Retorna uma string vazia se a data não puder ser analisada
+      return ''; 
     }
   };
 
@@ -58,8 +55,7 @@ export function SearchPage() {
     setLoading(true);
     setShowCard(false);
 
-    const cnpjCleaned = cnpj.replace(/\D/g, ''); // Remove caracteres não numéricos
-
+    const cnpjCleaned = cnpj.replace(/\D/g, ''); 
     if (!cnpjCleaned) {
       setError('Por favor, insira um CNPJ.');
       setLoading(false);
@@ -84,14 +80,17 @@ export function SearchPage() {
           data_inicio_atividade: formatDate(data.data_inicio_atividade) || '',
           descricao_situacao_cadastral: data.descricao_situacao_cadastral || '',
           ddd_telefone_1: data.ddd_telefone_1 || '',
-          endereco: `${data.logradouro || ''}, ${data.numero || ''} - ${data.bairro || ''}, ${data.municipio || ''} - ${data.uf || ''}, ${data.cep || ''}`,
+          endereco: `${data.logradouro || ''}, 
+           ${data.numero || ''} - ${data.bairro || ''}, 
+           ${data.municipio || ''} - ${data.uf || ''}, 
+           ${data.cep || ''}`,
           email: data.email || ''
         });
       }
       setTimeout(() => {
         setShowCard(true);
         setLoading(false);
-      }, 2000); // Atraso de 2 segundos antes de mostrar o card
+      }, 2000); 
     } catch (error) {
       setError(`Erro ao buscar CNPJ: ${error.message}`);
       setLoading(false);
@@ -111,43 +110,42 @@ export function SearchPage() {
     e.preventDefault();
     console.log("Dados submetidos:", editValues);
     setIsEditing(false);
-    // Aqui você pode adicionar a lógica para enviar os dados para uma API ou processá-los conforme necessário
   };
 
   return (
     <>
     <main className="flex flex-col items-center p-4 min-h-screen">
-      <div className="mt-10 max-w-4xl w-full">
-        <h1 className="text-gray-100 text-4xl font-semibold mb-8 text-center">Consulte um CNPJ</h1>
-        <div className="flex justify-center flex-col sm:flex-row gap-2">
-          <input 
-            className="bg-zinc-700 text-white p-3 rounded-md sm:w-2/3 lg:w-3/4 shadow-lg"
-            type="text" 
-            onChange={(e) => setCNPJ(e.target.value)}
-            placeholder="Informe um CNPJ..." 
-          />
-          <button 
-            onClick={buscarCNPJ}
-            className="font-semibold p-3 rounded-md text-white shadow-lg bg-lime-600 hover:bg-lime-700 w-full sm:w-auto">
-            Pesquisar
-          </button>
-        </div>
+        <div className="mt-10 max-w-4xl w-full">
+            <h1 className="text-gray-100 text-4xl font-semibold mb-8 text-center">Consulte um CNPJ</h1>
+              <div className="flex justify-center flex-col sm:flex-row gap-2">
+                  <input 
+                    className="bg-zinc-700 text-white p-3 rounded-md sm:w-2/3 lg:w-3/4 shadow-lg"
+                    type="text" 
+                    onChange={(e) => setCNPJ(e.target.value)}
+                    placeholder="Informe um CNPJ..." 
+                  />
+                    <button 
+                      onClick={buscarCNPJ}
+                      className="font-semibold p-3 rounded-md text-white shadow-lg trasition bg-lime-600 hover:bg-lime-700 w-full sm:w-auto">
+                      Pesquisar
+                    </button>
+            </div>
 
-        {error && <p className="text-red-500 mt-4">{error}</p>}
-        {loading && <Spinner />}
-        {showCard && result && (
-          <div className="mt-10 p-6">
-            <CardItems
-              editValues={editValues} 
-              handleInputChange={handleInputChange} 
-              handleEdit={handleEdit} 
-              handleSave={handleSave} 
-              isEditing={isEditing} 
-            />
-          </div>
-        )}
-      </div>
-    </main>
-    </>
+              {error && <p className="text-red-500 mt-4 ml-16">{error}</p>}
+              {loading && <Spinner />}
+              {showCard && result && (
+                <div className="mt-10 p-6">
+                  <CardItems
+                    editValues={editValues} 
+                    handleInputChange={handleInputChange} 
+                    handleEdit={handleEdit} 
+                    handleSave={handleSave} 
+                    isEditing={isEditing} 
+                  />
+                </div>
+              )}
+        </div>
+     </main>
+   </>
   );
 }
