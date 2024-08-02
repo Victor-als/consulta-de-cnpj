@@ -15,7 +15,7 @@ Projeto de consultas de cnpj. Depois que a pesquisa é feita podemos editar os d
 1. Clone o repositório:
 
 ```sh
-$ git clone https://github.com/Victor-als/consulta-cnpj
+$ git clone https://github.com/Victor-als/consulta-de-cnpj
 ```
 
 3. Instale as dependências:
